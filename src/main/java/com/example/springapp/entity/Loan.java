@@ -3,7 +3,7 @@
 package com.example.springapp.entity;
 
 import jakarta.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.util.Date;
 
 @Entity

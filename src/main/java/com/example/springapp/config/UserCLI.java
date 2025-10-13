@@ -1,5 +1,53 @@
 
 
+package com.example.springapp.config;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import com.example.springapp.entity.Users;
+import com.example.springapp.enumerated.Role;
+import com.example.springapp.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+public class UserCLI implements CommandLineRunner {
+
+    private final UserRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Only insert if table is empty
+        if (usersRepository.count() > 0) {
+            return;
+        }
+
+        Users user = Users.builder()
+                // Remove userId - let PostgreSQL auto-generate it
+                .firstName("Allsmart Admin")
+                .lastName("Access")
+                .age(22)
+                .emailId("projectdevopsx@gmail.com")
+                .password(passwordEncoder.encode("Devops@*#123"))
+                .gender("Male")
+                .countryCode("+91")
+                .mobile(6382797079L)
+                .profileImagePath("Allsmart.jpg")
+                .role(Role.ADMIN)
+                .build();
+
+        usersRepository.save(user);
+        System.out.println("Admin user inserted successfully!");
+    }
+}
+
+
+
+/*
 
 package com.example.springapp.config;
 
@@ -31,12 +79,12 @@ public class UserCLI implements CommandLineRunner {
                 .userId(1)
                 .firstName("Allsmart Admin")
                 .lastName("Access")
-                .age(20)
-                .emailId("natarajananbarasu@gmail.com")
-                .password(passwordEncoder.encode("Admin@*#123"))
+                .age(22)
+                .emailId("projectdevopsx@gmail.com")
+                .password(passwordEncoder.encode("Devops@*#123"))
                 .gender("Male")
                 .otp(null)
-                .profileImagePath("Admin.jpg")
+                .profileImagePath("Allsmart.jpg")
                 .countryCode("+91")
                 .mobile(6382797079L)
                 .role(com.example.springapp.enumerated.Role.ADMIN)
